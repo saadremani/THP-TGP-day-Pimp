@@ -1,0 +1,23 @@
+
+
+    <h1>Page utilisateur !</h1>
+
+    <p>
+      <%="Voici la page de : " +  @user.first_name %> <br/>
+        <br/>
+      <%="Prénom : " + @user.first_name %><br/>
+        <br/>
+      <%="Nom : " + @user.last_name %><br/>
+        <br/>
+      <%="Description : " + @user.description %><br/>
+        <br/>
+      <%="Age : " + @user.age.to_s %><br/>
+        <br/>
+      <%="Email : " + @user.email %><br/>
+        <br/>
+      <%="Ville : " + @user.city.name %><br/>
+        <br/>
+			<%= link_to "Afficher la ville", city_path(@user.city.id), class: 'btn btn-primary' %> 
+			
+    </p>
+

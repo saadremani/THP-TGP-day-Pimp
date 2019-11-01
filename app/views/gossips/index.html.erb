@@ -1,0 +1,78 @@
+
+<%if params[:format] != nil then %>
+
+	<% if params[:format] == "1" then %>
+    <div class="alert alert-success" role="alert">
+      <%= "sauvegarde du potin effectuée." %>
+    </div> 
+	<% end %>
+
+	<% if params[:format] == "3" then %>
+    <div class="alert alert-danger" role="alert">
+      <%= "Suppression du potin effectuée." %>
+    </div> 
+	<% end %>
+
+<% end %>
+
+	<% if flash[:auth] then %>
+    <div class="alert alert-danger" role="alert">
+      <%= flash[:auth] %>
+    </div> 
+	<% end %>
+
+	<% if flash[:regis] then %>
+    <div class="alert alert-success" role="alert">
+      <%= flash[:regis] %>
+    </div> 
+	<% end %>
+
+<div class="container">
+
+	<h1>Mon super site de gossip !</h1>
+	<%= link_to "Créer un potin", new_gossip_path, class: 'btn btn-primary mb-5 mt-5' %> 
+	<% @gossips_array.each do |g| %>	
+		<div class="card">
+			<div class="card-header">	<%= "Titre : " + g.title %></div>
+			</br>
+
+			<div class="card-body">	<%= "Auteur : " +  g.user.first_name %> </div> 
+			</br>
+
+			<div class="card-body">	<%= "Nombre de commentaires : " +  g.commentaries.size.to_s %> </div> 
+			<div class="card-body">	<%= "Nombre de likes : " +  g.likes.size.to_s %> </div> 
+			</br>
+
+			<div class="card-footer">
+
+					<%= link_to "Afficher",gossip_path(g.id), class: 'btn btn-primary' %>
+					
+					<% if logged_in? then %>
+						<% if current_user.id == g.user.id then %>
+							<%= link_to "Editer", edit_gossip_path(g.id), class: 'btn btn-success' %>
+
+							<%= link_to "Supprimer", gossip_path(g.id), class: 'btn btn-danger', :method => 'delete' %>
+						<% end %>
+					<% end %>
+
+					<% if logged_in? then %>
+						<% if match(current_user,g) then %>
+							<%= link_to "Déliker", like_path(5,user: current_user.id, gossip: g.id) , class: 'btn btn-danger', method: :delete %>
+						<% else %>
+							<%= link_to "Liker", likes_path(user: current_user.id, gossip: g.id), class: 'btn btn-success', method:  :post %>
+						<% end %>
+					<% end %>
+					
+
+
+			</div>
+
+		</div>
+		</br> </br>
+
+	<% end %>	
+		<%= link_to "Créer un potin", new_gossip_path, class: 'btn btn-primary' %> 
+</div>
+		
+
+

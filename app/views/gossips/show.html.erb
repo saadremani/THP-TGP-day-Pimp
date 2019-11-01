@@ -1,0 +1,115 @@
+	<% if params[:format] == "1" then %>
+    <div class="alert alert-primary" role="alert">
+      <%= "Ajout du commentaire effectué." %>
+    </div> 
+	<% end %>
+
+	<% if params[:format] == "2" then %>
+    <div class="alert alert-primary" role="alert">
+      <%= "Modification du potin effectuée." %>
+    </div> 
+	<% end %>
+
+	<% if params[:format] == "3" then %>
+    <div class="alert alert-danger" role="alert">
+      <%= "Suppression du commentaire effectuée." %>
+    </div> 
+	<% end %>
+
+
+
+<div class="container">
+
+	<h1>Page Potin !</h1>
+
+	<p>
+		<%="Voici la page du potin" %>
+		<br/> <br/>
+
+		<%="Titre : " + @gossip.title %>
+		<br/> <br/>
+
+		<%="Contenu : " + @gossip.content %>
+		<br/> <br/>
+
+		<%="Auteur : " + @gossip.user.first_name + " " +@gossip.user.last_name %>
+		<br/> <br/>
+
+		<%="Nombre de commentaires : " + @commentaries_array.size.to_s %>
+		<br/> <br/>
+
+		<%="Nombre de likes : " + @gossip.likes.size.to_s %>
+		<br/> <br/>
+
+		<%="Tags : " %> 
+		<% @gossip.tags.each do |t| %>
+			<%= t.title %>
+		<% end  %>
+		<br/> <br/>
+
+		<%="Date de création : " + @gossip.created_at.to_s %>
+		<br/> <br/>
+
+		<%= link_to "Afficher la page de l'auteur", user_path(@gossip.user.id), class: 'btn btn-primary'%>
+
+		<%= link_to "Commenter",new_gossip_commentary_path(@gossip.id), class: 'btn btn-primary'%>
+
+		<% if logged_in? then %>
+			<% if match(current_user,@gossip) then %>
+				<%= link_to "Déliker", like_path(5,user: current_user.id, gossip: @gossip.id) , class: 'btn btn-danger', method: :delete %>
+			<% else %>
+				<%= link_to "Liker", likes_path(user: current_user.id, gossip: @gossip.id), class: 'btn btn-success', method:  :post %>
+			<% end %>
+		<% end %>
+
+		<% if logged_in? then %>
+			<% if current_user.id == @gossip.id then %>
+				<%= link_to "Editer", edit_gossip_path, class: 'btn btn-success'%>
+
+				<%= link_to "Supprimer", gossip_path(g.id), class: 'btn btn-danger', :method => 'delete' %>
+
+			<% end %>
+		<% end %>
+	</p>
+</div>
+
+	<br/> <br/>
+
+	<div class="container">
+		<%= "Voici les commentaires du potin."	%>
+		<% @commentaries_array.each do |c| %>	
+			<div class="card">
+				<div class="card-header">	<%= "Titre : " + c.title %></div>
+				</br>
+
+				<div class="card-body">	<%= "Contenu : " +  c.content %> </div> 
+				</br>
+
+				<div class="card-footer">
+
+					<%= link_to "Afficher",gossip_commentary_path(c.gossip.id, c.id), class: 'btn btn-primary' %>
+
+					<% if logged_in? then %>
+						<% if match_c(current_user,c) then %>
+							<%= link_to "Déliker",comment_like_path(5,user: current_user.id, commentary: c.id) , class: 'btn btn-danger', method: :delete %>
+						<% else %>
+							<%= link_to "Liker", comment_likes_path(user: current_user.id, commentary: c.id), class: 'btn btn-success', method:  :post %>
+						<% end %>
+					<% end %>
+
+					<% if logged_in? then %>
+						<% if current_user.id == c.user.id then %>
+							<%= link_to "Editer", edit_gossip_commentary_path(c.gossip.id, c.id), class: 'btn btn-success' %>
+
+							<%= link_to "Supprimer", gossip_commentary_path(c.gossip.id, c.id), class: 'btn btn-danger', :method => 'delete' %>
+						<% end %>
+					<% end %>
+				</div>
+
+			</div>
+		</br> </br>
+
+		<% end %>	
+
+	</div>	
+

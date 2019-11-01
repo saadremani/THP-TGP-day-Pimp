@@ -1,0 +1,23 @@
+
+		<% if params[:format] == 2 then %>
+			<div class="alert alert-primary" role="alert">
+				<%= "Modification du commentaire effectuée." %>
+			</div> 
+		<% end %>
+
+    <h1>Page Commentaire !</h1>
+
+    <p>
+      <%="Voici la page du commentaire" %> <br/>
+        <br/>
+      <%="Titre : " + @commentary.title%><br/>
+        <br/>
+      <%="Contenu : " + @commentary.content%><br/>
+        <br/>
+      <%="Auteur : " + @commentary.gossip.user.first_name + " " +@commentary.gossip.user.last_name%><br/>
+        <br/>
+      <%="Date de création : " + @commentary.created_at.to_s%><br/>
+        <br/>
+				<%= link_to "Afficher la page de l'auteur", user_path(@commentary.gossip.user.id), class: 'btn btn-primary'%>
+        <br/>
+    </p>

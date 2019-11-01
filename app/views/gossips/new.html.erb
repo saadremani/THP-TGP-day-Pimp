@@ -1,0 +1,31 @@
+	
+	<div class="container text-white">
+    <h1>Créer un potin !</h1>
+    <p>Balance ton potin via le formulaire ci-dessous</p>
+
+		 <%= form_tag url_for(action: 'create'), method: "post" do %>
+
+      <%= label_tag 'Title' %>
+      <%= text_field_tag 'gossip[title]' %>
+      <br /> <br />
+
+      <%= label_tag 'Content' %>
+      <%= text_area_tag 'gossip[content]' %>
+      <br /> <br />
+
+      <%= label_tag 'TAGS' %>
+			<%= select_tag "tag",options_from_collection_for_select(@tags_array,"id","title") %>
+      <br /> <br />
+
+			<%= submit_tag "Créer le potin", class: 'btn btn-primary' %>
+      <br /> <br />
+		
+			<%if @gossip.errors.any? then %>	
+					<div class="alert alert-danger" role="alert"> 
+						<%=  @gossip.errors.full_messages %>
+					</div> 
+				<%= @message %>	
+			<% end %>	
+
+    <% end %>
+	</div>

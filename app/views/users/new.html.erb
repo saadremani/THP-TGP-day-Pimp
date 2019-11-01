@@ -1,0 +1,47 @@
+
+<div class="container text-white">
+    <h1> Inscris toi ! </h1>
+    <p>Balance ton potin via le formulaire ci-dessous</p>
+
+		 <%= form_tag url_for(action: 'create'), method: "post" do %>
+
+      <%= label_tag 'Prénom' %>
+      <%= text_field_tag 'user[first_name]' %>
+      <br /> <br />
+
+      <%= label_tag 'Nom' %>
+      <%= text_area_tag 'user[last_name]' %>
+      <br /> <br />
+
+      <%= label_tag 'Description' %>
+      <%= text_area_tag 'user[description]' %>
+      <br /> <br />
+
+      <%= label_tag 'Age' %>
+      <%= text_area_tag 'user[age]' %>
+      <br /> <br />
+
+      <%= label_tag 'email' %>
+      <%= text_area_tag 'user[email]' %>
+      <br /> <br />
+
+      <%= label_tag 'Mot de Passe' %>
+      <%= text_area_tag 'user[password]' %>
+      <br /> <br />
+
+
+      <%= label_tag 'Ville' %>
+			<%= select_tag "city",options_from_collection_for_select(@cities_array,"id","name") %>
+      <br /> <br />
+
+				<%= submit_tag "Create Post", class: 'btn btn-primary' %>
+      <br /> <br />
+		
+			<%if @user.errors.any? then %>	
+					<div class="alert alert-danger" role="alert"> 
+						<%=  @user.errors.full_messages %>
+					</div> 
+			<% end %>	
+
+    <% end %>
+	</div>

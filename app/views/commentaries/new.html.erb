@@ -1,0 +1,26 @@
+
+<div class="container text-white">
+    <h1>Créer un commentaire !</h1>
+    <p>Balance ton commentaire via le formulaire ci-dessous</p>
+
+		 <%= form_tag url_for(action: 'create'), method: "post" do %>
+
+      <%= label_tag 'Title' %>
+      <%= text_field_tag 'commentary[title]' %>
+      <br /> <br />
+
+      <%= label_tag 'Content' %>
+      <%= text_area_tag 'commentary[content]' %>
+      <br /> <br />
+
+			<%= submit_tag "Create Post", class: 'btn btn-primary' %>
+      <br /> <br />
+		
+			<%if @commentary.errors.any? then %>	
+					<div class="alert alert-danger" role="alert"> 
+						<%=  @commentary.errors.full_messages %>
+					</div> 
+			<% end %>	
+
+    <% end %>
+</div>

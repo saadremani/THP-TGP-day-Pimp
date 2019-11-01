@@ -1,0 +1,28 @@
+
+		<%if @gossip.errors.any? then %>	
+				<div class="alert alert-danger" role="alert"> 
+					<%=  @gossip.errors.full_messages %>
+				</div> 
+		<% end %>
+
+
+	<div class="container text-white">
+    <h1>Modifier un potin !</h1>
+    <p>Modifie ton potin via le formulaire ci-dessous</p>
+
+		 <%= form_tag url_for(action: 'update'), method: "patch" do %>
+
+      <%= label_tag 'Title' %>
+      <%= text_field_tag 'gossip[title]',@gossip.title %>
+      <br /> <br />
+
+      <%= label_tag 'Content' %>
+      <%= text_area_tag 'gossip[content]', @gossip.content %>
+      <br /> <br />
+
+				<%= submit_tag "Modifier Potin", class: 'btn btn-primary' %>
+      <br /> <br />
+		
+			<% end %>	
+
+	</div>

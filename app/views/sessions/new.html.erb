@@ -1,0 +1,35 @@
+
+
+	<% if flash[:login] then %>
+    <div class="alert alert-primary" role="alert">
+			<%= flash[:login] %>
+    </div> 
+	<% end %>
+
+	<div class="container">
+
+    <h1> Connecte toi ! </h1>
+
+    <p>
+			Connecte toi via le formulaire ci-dessous
+
+		 <%= form_tag url_for(action: 'create'), method: "post" do %>
+
+      <%= label_tag 'email' %>
+      <%= text_field_tag 'email' %>
+      <br /> <br />
+
+      <%= label_tag 'Mot de passe' %>
+      <%= text_area_tag 'password' %>
+      <br /> <br />
+
+
+				<%= submit_tag "connexion ", class: 'btn btn-primary' %>
+      <br /> <br />
+		
+
+    <% end %>
+
+		</p>
+
+	</div>

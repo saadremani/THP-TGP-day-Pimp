@@ -1,0 +1,35 @@
+
+    <p>
+      <%="Voici la page de la ville" %> 
+        <br/> <br/>
+      <%="Nom : " + @city.name %>
+        <br/> <br/>
+
+      <%="Voici les potins de la ville" %> 
+        <br/> <br/>
+
+	
+		<div class="container">
+			<% @gossips_array.each do |g| %>	
+				<div class="card">
+					<div class="card-header">	<%= "Titre : " + g.title %></div>
+						</br>
+					<div class="card-body">	<%= "Auteur : " +  g.user.first_name %> </div> 
+						</br>
+						<div class="card-footer">
+								<%= link_to "Afficher",gossip_path(g.id), class: 'btn btn-primary' %>
+
+								<% if logged_in? then %>
+									<% if current_user.id == g.id then %>
+										<%= link_to "Editer", edit_gossip_path(g.id), class: 'btn btn-primary' %>
+
+										<%= link_to "Supprimer", gossip_path(g.id), class: 'btn btn-primary', :method => 'delete' %>
+									<% end %>
+								<% end %>
+
+						</div>
+				</div>
+				</br>
+				</br>
+			<% end %>	
+			</div>
